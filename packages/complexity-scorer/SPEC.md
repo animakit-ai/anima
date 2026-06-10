@@ -164,11 +164,37 @@ Esto convierte el preset en prueba social directa: "esto es literalmente lo que 
 
 ---
 
+## Decisiones de diseño registradas (extracción, 10-jun-2026)
+
+Análisis del original encontró 7 debilidades; decisiones tomadas:
+
+| # | Debilidad encontrada | Decisión |
+|---|---|---|
+| D1 | `includes()` produce falsos positivos ('rut'→"rutina", 'iva'→"derivada", 'api'→"capital") y NO matchea sin tildes ("retencion"≠'retención') | Default `matching: 'word'`: whole-word + diacritic-insensitive (normalización NFD en ambos lados). `matching: 'substring'` disponible para replicación legacy |
+| D2 | El claim "exact config running in production" entra en tensión con arreglar bugs | `presets.animaProduction` replica producción AL PIE DE LA LETRA (vocab verbatim + substring + ES). El benchmark legacy-vs-word cuantifica el shift de tiers — contenido para el blog |
+| D3 | 'dado que' está en structure Y reasoning; 'retención' duplicado en domain | Dedup dentro de cada lista en el merge; el solape entre listas se mantiene (señales distintas) y queda documentado |
+| D4 | Constantes mágicas (saturación /4 y /3, curva de length) enterradas | Todo configurable: `saturation`, `lengthCurve` (breakpoints + tail), con defaults = producción |
+| D5 | Traducir anáforas ES→EN con pronombres sueltos (`this\|that`) dispararía en casi toda frase inglesa | El preset EN solo usa anáforas compuestas ("as I said", "following up on") — sin pronombres bare. Test explícito lo protege |
+| D6 | 70+ `includes()` por mensaje en el hot path | `createScorer()` compila UNA alternación regex por categoría (frases largas primero) → 1 pasada. Resultado: p99=86µs, 10x bajo el gate |
+
+**Benchmark inicial (sintético, 14 mensajes × 10k iteraciones, 10-jun-2026):**
+
+| Camino | p50 | p95 | p99 | Gate p99<1ms |
+|---|---|---|---|---|
+| `createScorer()` bilingual precompilado | 9.4µs | 63.6µs | 86.0µs | ✅ |
+| `createScorer(presets.animaProduction)` legacy | 13.9µs | 60.6µs | 83.6µs | ✅ |
+| `scoreComplexity()` singleton | 10.0µs | 63.1µs | 100.1µs | ✅ |
+| `scoreComplexity(msg, config)` cold (recompila) | 63.5µs | 139.3µs | 214.7µs | ✅ |
+
+Pendiente antes del 0.1.0: replay sobre el corpus real de 844 mensajes (`daily_logs`) → Tablas 2-3 (distribución de tiers + costo), validación de precisión contra ≥50 mensajes etiquetados a mano, y tabla legacy-vs-word.
+
+---
+
 ## Checklist de extracción
 
-- [ ] Copiar `ComplexityScorer.ts` al nuevo paquete
-- [ ] Separar `lengthSignal`, `tierFromScore`, pesos, thresholds (universales — sin cambios)
-- [ ] Construir `presets.bilingual`: traducir/expandir `STRUCTURE_MARKERS`, `REASONING_PATTERNS`, `CONTEXT_PATTERNS` a inglés, mantener versión española como parte del bilingual set
+- [x] Copiar `ComplexityScorer.ts` al nuevo paquete
+- [x] Separar `lengthSignal`, `tierFromScore`, pesos, thresholds (universales — sin cambios)
+- [x] Construir `presets.bilingual`: traducir/expandir `STRUCTURE_MARKERS`, `REASONING_PATTERNS`, `CONTEXT_PATTERNS` a inglés, mantener versión española como parte del bilingual set
 - [ ] Mover `DOMAIN_KEYWORDS`, `STRUCTURE_MARKERS`, `REASONING_PATTERNS`, `CONTEXT_PATTERNS` actuales (tal cual, en español, dominio Anima) a `presets.animaProduction`
 - [ ] Implementar `createScorer(config)` con merge de `extend`/`replace`
 - [ ] `scoreComplexity = createScorer(defaultConfig)`
