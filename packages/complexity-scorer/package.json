@@ -1,12 +1,12 @@
-{
+﻿{
   "name": "@animakit/complexity-scorer",
   "version": "0.0.0",
-  "description": "Classify LLM tasks in <1ms with zero tokens — 5 weighted signals → complexity tier, before you ever call an LLM.",
+  "description": "Classify LLM tasks in <1ms with zero tokens â€” 5 weighted signals â†’ complexity tier, before you ever call an LLM.",
   "license": "MIT",
   "author": "Justine Serna Aza",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/animakit/anima.git",
+    "url": "git+https://github.com/animakit-ai/anima.git",
     "directory": "packages/complexity-scorer"
   },
   "keywords": ["llm", "agents", "routing", "complexity", "model-routing", "cost-optimization"],
