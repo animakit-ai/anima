@@ -9,8 +9,12 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createScorer, presets } from '../src/index.js';
-// @ts-expect-error — original lives outside the monorepo, local verification only
-import { scoreComplexity as originalScore } from '../../../../Anima_core/src/router/ComplexityScorer.ts';
+// Fixture: copia verbatim del scorer original de producción, preservada aquí
+// el día del reemplazo (11-jun-2026) para que esta paridad sea reproducible
+// para siempre. El original fue eliminado de Anima_core/src tras pasar el
+// golden-master sandbox (348 idénticos + 4 solo-score + 1 tier flip documentado).
+// @ts-expect-error — fixture TS importada directamente por tsx
+import { scoreComplexity as originalScore } from './fixtures/original-ComplexityScorer.ts';
 import { cleanCorpus } from './replay.js';
 
 const here = dirname(fileURLToPath(import.meta.url));

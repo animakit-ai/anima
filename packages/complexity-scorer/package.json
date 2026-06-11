@@ -1,6 +1,6 @@
 {
   "name": "@animakit/complexity-scorer",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Classify LLM tasks in <1ms with zero tokens - 5 weighted signals to complexity tier, before you ever call an LLM.",
   "license": "MIT",
   "author": "Justine Serna Aza",
@@ -18,12 +18,18 @@
     "cost-optimization"
   ],
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "files": [
@@ -34,7 +40,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --clean",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
     "bench": "node --import tsx benchmarks/latency.ts"

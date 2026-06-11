@@ -1,5 +1,17 @@
 # @animakit/complexity-scorer
 
+## 0.1.2
+
+### Patch Changes
+
+- Nested export conditions so TypeScript resolves CJS types (`index.d.cts`) under `require` — fixes TS1479 for CommonJS consumers with Node16 module resolution.
+
+## 0.1.1
+
+### Patch Changes
+
+- Dual ESM+CJS build — `require('@animakit/complexity-scorer')` now works for CommonJS consumers (caught by dogfooding the package into the CJS production agent it was extracted from).
+
 ## 0.1.0
 
 ### Minor Changes
