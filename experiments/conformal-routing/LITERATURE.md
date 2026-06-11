@@ -38,9 +38,35 @@ Casi. `daily_logs` tiene: `user_message` (→ features recomputables en replay, 
 **c) ¿α homeostático continuo o discreto?**
 **Discreto por diseño**: 3 modos (zen/flow/panic) → 3 budgets α pre-calibrados, cada uno con su propio conjunto de calibración (CRC condicional por grupo — variante limpia y estándar). Evita las complicaciones de α continuo y hace el claim auditable: una tabla de 3 filas (modo, α nominal, cobertura empírica) en el README.
 
-## Condiciones para el pre-registro 3b (no antes de)
+## 3a.2 — Lectura profunda (CERRADO 10-jun-2026)
 
-- [ ] Leer RACER y RouteNLP completos — confirmar qué supervisión usan y ajustar claim
-- [ ] 0.1.0 publicado (las 50 etiquetas son insumo del punto b)
-- [ ] Gates ya definidos: cobertura empírica ≥ nominal − 2pp en holdout TEMPORAL (no aleatorio); baseline = router conformal naïve sin homeostasis Y MLP sobre señales del scorer; veredicto numérico pre-acordado
-- [ ] Walkthrough del dataflow real (no diagrama conceptual) como sección obligatoria del pre-registro
+Matriz de decisión sobre los 4 papers con overlap (criterio binario por dimensión diferenciadora):
+
+| Paper | Supervisión de calibración | Drift / recalibración | α adaptativo | Open-source |
+|---|---|---|---|---|
+| **RACER** | Labels de benchmark fijo (oracle de corrección sobre GSM8K/MMLU/CMMLU/ARC) | ❌ No — asume intercambiabilidad, sin estrategia temporal | ❌ Fijo ("user-specified") | Repo anónimo (pre-publicación) |
+| **RouteNLP** | **Logs de escalación** (self-confidence del cascade) — la auditoría humana del piloto fue retrospectiva, NO alimenta el loop | ⚠️ Recalibración **manual semanal**; drift estadístico declarado como *future work* ("online threshold adaptation") | ❌ Fijo (α=0.05) | ✅ GitHub |
+| **Proactive Routing** | Labels de degradación del surrogate (|y−g(x)|−|y−f(x)| ≤ τ) | ❌ "Under covariate shift the guarantee formally breaks" (reconocido) | ❌ Fijo | ? |
+| **Conformal Arbitrage** | Benchmarks (TruthfulQA/MMLU, PKU-SafeRLHF) — lectura de abstract | — | — | — |
+
+**Veredicto del claim: SOBREVIVE en las 3 dimensiones.**
+
+1. **Supervisión por correcciones implícitas del operador**: nadie la usa. RACER = benchmarks; RouteNLP = escalación por self-confidence (que mide la inseguridad del modelo barato, NO la calidad juzgada por el humano — son señales distintas: un modelo puede estar confiado Y equivocado, que es exactamente lo que la corrección humana captura); Proactive = degradación de surrogate.
+2. **Drift con control estadístico (SPRT)**: nadie lo tiene. RouteNLP lo nombra explícitamente como future work — **estaríamos implementando el future work del paper más cercano**, con maquinaria (Wald) que ya corre en producción en Anima.
+3. **α adaptativo por estado (homeostático, discreto por modo)**: nadie. Los cuatro usan α fijo.
+
+Claim final para el pre-registro 3b:
+
+> "An open-source routing layer that (i) calibrates conformal risk guarantees from implicit operator corrections — zero annotation cost, a supervision source no prior router uses; (ii) guards calibration validity with sequential statistical drift detection (SPRT), the stated future work of the closest prior system; and (iii) adapts the risk budget to agent state via discrete, auditable per-mode calibration."
+
+Riesgo residual bajo: Conformal Arbitrage y los 2 papers de soporte (Linear Expectation, Bootstrapped CRC) solo se leyeron a nivel abstract — se citan como related work y la variante CRC se elige tras leer Bootstrapped CRC (puede aportar la técnica de varianza). Ninguno toca las 3 dimensiones del claim.
+
+## Condiciones para el pre-registro 3b
+
+- [x] ~~Leer RACER y RouteNLP completos~~ — CERRADO, claim confirmado (matriz arriba)
+- [ ] 0.1.0 publicado (las 50 etiquetas son insumo de la fidelidad corrección↔calidad)
+- [ ] Leer Bootstrapped CRC para elegir variante (técnica, no claim)
+- [ ] **Baseline obligatoria (presión de Opus, aceptada): kNN + CRC vanilla sin homeostasis ni SPRT.** Si el sistema completo no le gana en cobertura empírica bajo drift o en costo total bajo presión de presupuesto, no hay feature insignia — hay overhead. Las baselines logreg/MLP quedan como secundarias.
+- [ ] Gates: cobertura empírica ≥ nominal − 2pp en holdout TEMPORAL (no aleatorio); veredicto numérico pre-acordado
+- [ ] Walkthrough del dataflow real (no diagrama conceptual) como sección obligatoria
+- [ ] Citar RouteNLP como el sistema previo más cercano y RACER como validación del paradigma; citar kNN-beats-routers correctamente: "kNN gana en accuracy estacionaria sin garantías — nosotros añadimos garantías y drift, y por eso kNN+CRC es nuestra baseline, no nuestra víctima"
