@@ -86,9 +86,11 @@ const dataPath = join(here, 'data', 'raw', 'daily_logs.json');
 
 let rows: LogRow[];
 try {
-  rows = JSON.parse(readFileSync(dataPath, 'utf-8')) as LogRow[];
-} catch {
-  console.error(`\nNo corpus found at ${dataPath}`);
+  const raw = readFileSync(dataPath, 'utf-8').replace(/^﻿/, ''); // strip BOM
+  rows = JSON.parse(raw) as LogRow[];
+} catch (err) {
+  console.error(`\nCould not load corpus at ${dataPath}`);
+  console.error(err instanceof Error ? err.message : String(err));
   console.error('Save the full daily_logs export there (see SPEC §6) and re-run.\n');
   process.exit(1);
 }

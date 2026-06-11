@@ -81,7 +81,12 @@ const DEFAULT_WEIGHTS: ComplexitySignals = {
   contextRequired: 0.15,
 };
 
-const DEFAULT_THRESHOLDS = { micro: 0.25, small: 0.45, medium: 0.65 };
+// Default thresholds calibrated against 50 blind operator labels on real
+// production traffic (grid search + leave-one-out CV: 52% exact, 82% within
+// ±1 tier, under-routing 38% vs 54% with the original production thresholds).
+// The original production thresholds (0.25/0.45/0.65) live in presets.animaProduction.
+const DEFAULT_THRESHOLDS = { micro: 0.18, small: 0.215, medium: 0.395 };
+const PRODUCTION_THRESHOLDS = { micro: 0.25, small: 0.45, medium: 0.65 };
 const DEFAULT_SATURATION = { reasoning: 4, context: 3 };
 const DEFAULT_LENGTH_CURVE: NonNullable<ComplexityScorerConfig['lengthCurve']> = {
   breakpoints: [
@@ -311,6 +316,7 @@ export const presets: {
   animaProduction: {
     language: 'es',
     matching: 'substring',
+    tierThresholds: PRODUCTION_THRESHOLDS,
     vocabulary: {
       domainKeywords: { replace: ANIMA_PRODUCTION_VOCABULARY.domainKeywords },
       structureMarkers: { replace: ANIMA_PRODUCTION_VOCABULARY.structureMarkers },
