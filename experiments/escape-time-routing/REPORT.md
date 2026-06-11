@@ -6,6 +6,8 @@
 
 Pre-registramos una prueba falsable de la hipótesis de que el tiempo de escape de un mapa racional iterado sobre vectores proyectados separa clases de complejidad cognitiva mejor que baselines no-lineales estándar. Tras tres corridas con errores de diseño identificados y corregidos en cada iteración, **la hipótesis no sobrevive**. En la única configuración donde el régimen adversarial fue no trivial, el escape time obtuvo AUC = 0.500 ± 0.000 (chance puro) mientras un MLP de 64 unidades alcanzó F1 = 0.895 sobre los mismos datos.
 
+**Pero el hallazgo principal no es el entierro del fractal.** El régimen que construimos para testearlo reveló una propiedad arquitectónica del estado del arte: **la geometría de los embeddings codifica tema, no demanda cognitiva**. Cuando la complejidad vive en una dirección lineal del espacio (régimen B v1), cualquier clasificador trivial la recupera (logreg F1=1.000) — pero eso es un artefacto de cómo se construye el espacio, no una propiedad de los mensajes reales, donde mensajes triviales y complejos del mismo tema son vecinos cercanos. Los routers basados en similitud de embeddings heredan esta geometría temática. Esa observación, con números, es el punto de partida de nuestro trabajo siguiente en routing calibrado por feedback conductual (ver `../conformal-routing/`).
+
 Publicamos como anti-resultado limpio. La metodología (pre-registro, gates de validez, veredicto numérico pre-acordado) es reutilizable; la hipótesis específica no.
 
 ## 1. La pregunta
