@@ -61,6 +61,35 @@ Claim final para el pre-registro 3b:
 
 Riesgo residual bajo: Conformal Arbitrage y los 2 papers de soporte (Linear Expectation, Bootstrapped CRC) solo se leyeron a nivel abstract — se citan como related work y la variante CRC se elige tras leer Bootstrapped CRC (puede aportar la técnica de varianza). Ninguno toca las 3 dimensiones del claim.
 
+## 3a.3 — Verificación del reporte Gemini (protocolo Opus, 10-jun-2026)
+
+Investigación amplia de Gemini revisada por Opus 4.7 → cada cita crítica verificada contra la fuente primaria:
+
+| Cita | Estado | Hallazgo verificado |
+|---|---|---|
+| **GPT-5 System Card** ([arXiv:2601.03267](https://arxiv.org/abs/2601.03267)) | ✅ **VERBATIM** | *"The router is continuously trained on real signals, including when users switch models, preference rates for responses, and measured correctness, improving over time."* Y: el System Card NO menciona drift, recalibración ni garantías formales del router |
+| **UCCI** ([arXiv:2605.18796](https://arxiv.org/abs/2605.18796)) | ✅ | Calibración isotónica para cascadas, ECE 0.12→0.03, −31% costo. **Sin manejo de no-estacionariedad ni recalibración online** — nuestra diferenciación se mantiene |
+| **EquiRouter** ([arXiv:2602.03478](https://arxiv.org/abs/2602.03478)) | ✅ | Acuña "routing collapse" (default sistemático al modelo más caro). Munición conceptual para α adaptativo |
+| **HyDRA** ([arXiv:2605.17106](https://arxiv.org/abs/2605.17106)) | ✅ | Routing por vector de capacidades multi-dimensional, desplegado en GitHub Copilot. Catálogo-agnóstico; sin feedback implícito ni garantías |
+| **LLM-Guardian** ([MDPI](https://www.mdpi.com/2504-4990/8/2/43)) | ✅ | Conformal prediction + **CUSUM secuencial adaptativo** + drift por optimal transport, en ciberseguridad vehicular. **Prueba de viabilidad de la composición CRC+test secuencial en dominio safety-critical** — nuestro paper transpone al dominio LLM-routing |
+| **RouteNLP ">60% violación bajo drift"** | ❌ **NO ENCONTRADA — FALSA** | El paper reporta: sin shift 4.2%, difficulty shift 6.8%, **domain shift 8.1% (peor caso)**, task mix 5.4%; con recalibración semanal 4.8%. La cifra >60% del reporte Gemini no existe en el paper. **No citar jamás** — usar 8.1% como el número real (que igual excede el target del 5% y motiva el guardián de drift) |
+
+**Lección reconfirmada**: el reporte de Gemini era direccional y útil, pero contenía al menos una cifra fabricada. Toda cita pasa por fuente primaria antes de entrar a un documento nuestro.
+
+### Reframing del claim tras la verificación (el hallazgo GPT-5)
+
+El feedback implícito ya no es "nadie lo hace": **la frontera cerrada lo hace y lo declara** — nadie open lo ofrece. El claim sube de novedad técnica a **disponibilidad arquitectónica**:
+
+> "GPT-5's router is continuously trained on implicit user signals — model switches, preference rates, measured corrections (OpenAI System Card, verbatim). No open-source router offers that mechanism. We ship it, and add what even GPT-5 doesn't document: distribution-free risk guarantees (CRC), statistically-controlled drift detection (SPRT — the composition LLM-Guardian proved viable in safety-critical vehicular systems), and auditable adaptive risk budgets. The components exist; the open composition doesn't."
+
+Casos de estudio para blog/paper: el incidente de degradación del router de GPT-5 (citar fuente original con tono matizado — "Code Red" puede ser dramatización periodística) = qué pasa con routing agresivo sin garantías ni manejo de drift; "routing collapse" (EquiRouter) = qué evita el α adaptativo por construcción.
+
+### Riesgos abiertos (del análisis de Opus, aceptados)
+
+1. UCCI puede publicar extensión online — vigilar a sus autores en arXiv.
+2. LLM-Guardian + RouteNLP están a una transposición de distancia de nuestro claim — **acelerar el pre-registro 3b, no postergarlo**.
+3. Segunda pasada por HuggingFace Spaces / Papers With Code (~30 min) para routers <500 stars con mecanismos novedosos.
+
 ## Condiciones para el pre-registro 3b
 
 - [x] ~~Leer RACER y RouteNLP completos~~ — CERRADO, claim confirmado (matriz arriba)
