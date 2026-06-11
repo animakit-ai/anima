@@ -158,9 +158,13 @@ export const EN_VOCABULARY: VocabularySet = {
 // This is the EXACT configuration running in Anima's production agent
 // (Colombian tax/legal + business SaaS domain, Spanish). Shipped as social
 // proof and as a reference for building your own domain vocabulary.
-// Note: it preserves production quirks on purpose (e.g. 'retención' listed
-// twice, 'dado que' present in both structure and reasoning) — paired with
-// matching: 'substring' it replicates production behavior bit by bit.
+//
+// Replication fidelity (verified over 353 real production messages,
+// benchmarks/parity-vs-original.ts): 99.7% identical tiers. The single known
+// deviation: the original accidentally lists 'retención' twice and therefore
+// double-counts it; we deduplicate vocabularies on merge and count it once.
+// We document the bug rather than replicate it. Cross-list overlaps
+// ('dado que' in both structure and reasoning) ARE preserved.
 
 export const ANIMA_PRODUCTION_VOCABULARY: VocabularySet = {
   domainKeywords: [
