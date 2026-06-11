@@ -1,5 +1,11 @@
 # @animakit/complexity-scorer
 
+## 0.1.3
+
+### Patch Changes
+
+- README: corrected the cost-savings claim with verified June 2026 pricing. The miscalibrated original thresholds "saved" 99%+ by under-routing everything; with calibrated defaults the honest number is 31.6% vs all-frontier — routing correctly costs more than routing badly. Cost model in `benchmarks/replay.ts` updated to published rates (Fable 5 / Mythos 5 = $10/$50 per M tokens).
+
 ## 0.1.2
 
 ### Patch Changes

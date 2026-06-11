@@ -1,6 +1,6 @@
 {
   "name": "@animakit/complexity-scorer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Classify LLM tasks in <1ms with zero tokens - 5 weighted signals to complexity tier, before you ever call an LLM.",
   "license": "MIT",
   "author": "Justine Serna Aza",

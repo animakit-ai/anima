@@ -31,7 +31,7 @@ Most agent frameworks send every message to the same (expensive) model, or spend
 | medium | 10.2% |
 | large | 0.8% |
 
-Simulated routing cost on that corpus vs sending everything to a frontier model: **~99% cheaper** (local model for micro at $0; exact savings depend on your model prices — reproduce with `benchmarks/replay.ts` on your own traffic).
+Simulated routing cost on that corpus vs sending everything to a frontier model (published June 2026 pricing, $10/$50 per M tokens): **31.6% cheaper** — and that number deserves an honest footnote. The *miscalibrated* original thresholds "saved" 99%+ by under-routing everything to free local models; the calibrated defaults route 11% of messages to frontier models because they genuinely need them, and those long messages carry most of the cost mass. **Routing correctly costs more than routing badly — 31.6% is the honest number.** Reproduce with `benchmarks/replay.ts` on your own traffic and prices.
 
 ## Latency
 

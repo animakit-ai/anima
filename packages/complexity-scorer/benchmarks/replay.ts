@@ -53,17 +53,20 @@ export function cleanCorpus(rows: LogRow[]): { messages: string[]; dropped: Reco
 // ── Cost model (June 2026 pricing, per 1M tokens; CLEARLY MARKED estimates) ──
 // Token estimate: Spanish ≈ 1 token / 3.5 chars. Output assumed 2x input.
 
+// Published pricing, June 2026 (verified 11-jun):
+//   Fable 5 = Mythos 5 = $10 in / $50 out per M tokens.
+//   (Mythos 5 is Glasswing-partner restricted; Fable 5 is the public tier.)
 const PRICE_PER_M_INPUT: Record<string, number> = {
-  'ollama-local': 0, //          local qwen3 — $0
-  'deepseek-chat': 0.27, //      published
-  'claude-fable-5': 10, //       published (June 2026)
-  'claude-mythos-5': 30, //      ESTIMATE — update with published pricing before README
+  'ollama-local': 0,
+  'deepseek-chat': 0.27,
+  'claude-fable-5': 10,
+  'claude-mythos-5': 10,
 };
 const OUTPUT_MULT: Record<string, number> = {
   'ollama-local': 0,
   'deepseek-chat': 1.1 / 0.27,
   'claude-fable-5': 50 / 10,
-  'claude-mythos-5': 5, //       ESTIMATE
+  'claude-mythos-5': 50 / 10,
 };
 
 const TIER_MODEL: Record<ComplexityTier, string> = {
@@ -148,4 +151,4 @@ console.log('\n── Table 3: cost simulation (input+output, est. tokens = char
 console.log(`naive  (all → Mythos 5):        $${naiveCost.toFixed(4)}`);
 console.log(`tiered (scorer routing):        $${tieredCost.toFixed(4)}`);
 console.log(`savings: ${(100 * (1 - tieredCost / naiveCost)).toFixed(1)}%`);
-console.log('\n⚠ Mythos 5 pricing is an ESTIMATE — replace with published pricing before README.\n');
+console.log('\nPricing: published June 2026 rates (Fable 5 / Mythos 5 = $10/$50 per M tokens).\n');
