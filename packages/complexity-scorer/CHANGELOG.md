@@ -1,5 +1,11 @@
 # @animakit/complexity-scorer
 
+## 0.1.4
+
+### Patch Changes
+
+- README: new "Model-agnostic by design" section — the tier→model mapping is the caller's, with any provider (the production agent has run on Gemma 4, Gemini 3.1, GPT-5.x, Kimi, GLM, Grok, DeepSeek and Claude without touching the scorer). Also adds a transparency note about the private calibration set.
+
 ## 0.1.3
 
 ### Patch Changes

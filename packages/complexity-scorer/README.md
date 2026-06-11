@@ -96,15 +96,33 @@ import { createScorer, presets } from '@animakit/complexity-scorer';
 const score = createScorer(presets.animaProduction);
 ```
 
+## Model-agnostic by design
+
+The scorer never names a model — it returns a tier, and mapping tiers to models is entirely your call, with any provider:
+
+```ts
+// One example — swap in whatever you run:
+const model = {
+  micro: 'ollama:gemma4-12b-qat', // or e4b, qwen, anything local
+  small: 'deepseek-chat',         // or gemini-3.1-flash, gpt-5.1-mini
+  medium: 'claude-fable-5',       // or gemini-3.1-pro, gpt-5.4, kimi-k2.6
+  large: 'claude-mythos-5',       // or gpt-5.5, glm-5.1, grok
+}[tier];
+```
+
+This isn't theoretical: the production agent this was extracted from has run on **Gemma 4 (e4b and 12B), Gemini 3.1 (flash/thinking/pro), GPT-5.1/5.4/5.5, Kimi k2.6, GLM 5.1, Grok, DeepSeek and Claude** at different points — the scorer never changed, only the mapping did. The cost tables in this README use one specific mapping (local/$0 → DeepSeek → Fable 5) because those were the prices simulated; your savings depend on your fleet.
+
 ## What this is NOT
 
-- Not a model selector — it returns a tier; mapping tier → model is your call (we map micro→local Ollama, small→DeepSeek, medium→Claude Fable 5, large→Claude Mythos 5).
+- Not a model selector — it returns a tier; the mapping above is yours.
 - Not an LLM router with learned weights — deterministic and static by design; same input, same output, every time, explainable via `signals`.
 - Not async, no I/O, no network — ever.
 
 ## Benchmarks are reproducible
 
 Every number above comes from a script in [`benchmarks/`](./benchmarks): `latency.ts`, `replay.ts` (run it on your own message log), `precision.ts` (validate against your own labels), `calibrate-thresholds.ts` (fit thresholds to your traffic with LOO CV). If a claim isn't reproducible, we don't ship it.
+
+One transparency note: our calibration set contains private business messages, so the exact labeled corpus doesn't ship — the scripts let you reproduce the *methodology* on your own data, which is the point: your traffic is what your thresholds should fit.
 
 ## Part of ANIMA
 
