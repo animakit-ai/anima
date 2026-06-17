@@ -3,7 +3,7 @@
   "private": true,
   "description": "ANIMA — Agentic Neuro-Inspired Memory Architecture. Battle-tested cognitive architecture for LLM agents, extracted from 53 sprints in production.",
   "license": "MIT",
-  "author": "Justine Serna Aza",
+  "author": "Justine Serna",
   "type": "module",
   "engines": {
     "node": ">=20"

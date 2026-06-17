@@ -130,4 +130,4 @@ One transparency note: our calibration set contains private business messages, s
 
 ## License
 
-MIT © Justine Serna Aza
+MIT © Justine Serna

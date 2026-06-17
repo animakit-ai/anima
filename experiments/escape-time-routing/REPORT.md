@@ -1,6 +1,6 @@
 # Technical note: Escape-Time Routing — a clean anti-result
 
-*Authors: Justine Serna Aza, with Claude Opus 4.7 (implementation/review) and Claude Fable 5 (pre-registration/review). June 2026.*
+*Authors: Justine Serna, with Claude Opus 4.7 (implementation/review) and Claude Fable 5 (pre-registration/review). June 2026.*
 
 ## TL;DR
 
