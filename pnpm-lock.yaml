@@ -29,6 +29,8 @@ importers:
 
   packages/complexity-scorer: {}
 
+  packages/homeostasis: {}
+
 packages:
 
   '@ampproject/remapping@2.3.0':

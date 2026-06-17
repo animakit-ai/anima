@@ -27,4 +27,4 @@ More coming — see each package's `SPEC.md` for design docs.
 
 ## License
 
-MIT © Justine Serna Aza
+MIT © Justine Serna
