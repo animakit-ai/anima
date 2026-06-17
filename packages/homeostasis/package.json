@@ -1,0 +1,65 @@
+{
+  "name": "@animakit/homeostasis",
+  "version": "0.0.0",
+  "description": "Give your LLM agent a mood — Yerkes-Dodson stress modeling, Russell affect mapping, allostatic regulation, and a self-tuning 3-arm bandit. <1µs, 0 tokens, fully serializable.",
+  "license": "MIT",
+  "author": "Justine Serna",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/animakit-ai/anima.git",
+    "directory": "packages/homeostasis"
+  },
+  "keywords": [
+    "llm",
+    "agents",
+    "homeostasis",
+    "stress",
+    "yerkes-dodson",
+    "allostasis",
+    "affect",
+    "thompson-sampling",
+    "bandit",
+    "cost-optimization"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./valence": {
+      "import": {
+        "types": "./dist/valence.d.ts",
+        "default": "./dist/valence.js"
+      },
+      "require": {
+        "types": "./dist/valence.d.cts",
+        "default": "./dist/valence.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/valence.ts --format esm,cjs --dts --clean",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "bench": "node --import tsx benchmarks/latency.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
