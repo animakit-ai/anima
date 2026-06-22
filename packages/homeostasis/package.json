@@ -1,6 +1,6 @@
 {
   "name": "@animakit/homeostasis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Give your LLM agent a mood — Yerkes-Dodson stress modeling, Russell affect mapping, allostatic regulation, and a self-tuning 3-arm bandit. Sub-µs core ops, every op <1ms, 0 tokens, fully serializable.",
   "license": "MIT",
   "author": "Justine Serna",
