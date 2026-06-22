@@ -1,6 +1,6 @@
 # @animakit/homeostasis
 
-> Give your agent a mood — modeled on 100 years of psychology. Stress curves (Yerkes-Dodson 1908), affect mapping (Russell 1980), allostatic regulation (Sterling & Eyer 1988), and a self-tuning 3-arm bandit. **<1µs, 0 tokens, fully serializable.**
+> Give your agent a mood — modeled on 100 years of psychology. Stress curves (Yerkes-Dodson 1908), affect mapping (Russell 1980), allostatic regulation (Sterling & Eyer 1988), and a self-tuning 3-arm bandit. **Sub-µs core ops, every op <1ms, 0 tokens, fully serializable.**
 
 ![license](https://img.shields.io/npm/l/@animakit/homeostasis) ![types](https://img.shields.io/npm/types/@animakit/homeostasis)
 
@@ -13,7 +13,7 @@ Most agent frameworks are **stateless between turns**: every message is processe
 - modulates **behavioral biases** across sub-agents/roles (somatic markers, Damasio),
 - and **self-regulates** without hard-coded rate limits — the "calm" set-point moves with anticipated context (allostasis).
 
-All of it in <1µs, **0 tokens, 0 LLM calls**, fully serializable (`toJSON`/`fromJSON`). Extracted from [Anima](https://github.com/animakit-ai/anima)'s production agent — 53 sprints of real traffic.
+All of it with **sub-microsecond core ops** (every op p99 < 1ms), **0 tokens, 0 LLM calls**, fully serializable (`toJSON`/`fromJSON`). Extracted from [Anima](https://github.com/animakit-ai/anima)'s production agent — 53 sprints of real traffic. See [BENCHMARKS.md](./BENCHMARKS.md) for the numbers.
 
 > "Cost control through biology, not rate limits."
 

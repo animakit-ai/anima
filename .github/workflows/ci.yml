@@ -19,3 +19,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm build
       - run: pnpm test
+      # Deterministic correctness benchmarks as release gates (seeded, no timing
+      # assertions). Latency lives in `pnpm bench` and is run locally, not gated in
+      # CI — sub-ms assertions are unreliable on shared runners.
+      - run: pnpm -r bench:gates
