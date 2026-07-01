@@ -1,0 +1,59 @@
+{
+  "name": "@animakit/git-guardrails",
+  "version": "0.1.0",
+  "description": "Human-in-the-loop confirmation for AI agents with git/shell access — <1ms decision layer, 0 runtime deps. Extracted from 53 production sprints.",
+  "license": "Apache-2.0",
+  "author": "Justine Serna",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/animakit-ai/anima.git",
+    "directory": "packages/git-guardrails"
+  },
+  "keywords": [
+    "llm",
+    "agents",
+    "git",
+    "shell",
+    "guardrails",
+    "safety",
+    "human-in-the-loop",
+    "agentic",
+    "security",
+    "ai-safety"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "bench": "node --import tsx benchmarks/latency.ts",
+    "bench:stats": "node --import tsx benchmarks/production-stats.ts"
+  },
+  "devDependencies": {
+    "@types/node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
