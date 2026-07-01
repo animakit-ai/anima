@@ -10,7 +10,7 @@ I ran an AI agent in production for 53 sprints. I saw exactly where standard age
 |---|---|---|
 | [`@animakit/complexity-scorer`](packages/complexity-scorer) | Classify LLM tasks in <1ms, 0 tokens — before you ever call an LLM | ✅ [npm](https://www.npmjs.com/package/@animakit/complexity-scorer) |
 | [`@animakit/homeostasis`](packages/homeostasis) | Stress/dopamine state for agents — cost control through biology, not rate limits; self-tuning 3-arm bandit | ✅ [npm](https://www.npmjs.com/package/@animakit/homeostasis) |
-| `@animakit/git-guardrails` | Human-in-the-loop confirmation for agents with git/shell access | planned |
+| [`@animakit/git-guardrails`](packages/git-guardrails) | Human-in-the-loop confirmation for agents with git/shell access | 🔨 built, PR pending |
 | `@animakit/debate` | Multi-agent debate with a measurable integration score (Φ̂) | planned |
 | `@animakit/presence-aware` | Calendar + Slack signals → "can my agent interrupt right now?" | planned |
 | `@animakit/neuromorphic-router` | Deterministic agent routing in <1ms with veto + lateral inhibition | planned |
@@ -27,4 +27,4 @@ More coming — see each package's `SPEC.md` for design docs.
 
 ## License
 
-MIT © Justine Serna
+MIT © Justine Serna, except `@animakit/git-guardrails` which is Apache-2.0 (see its own `LICENSE`).
